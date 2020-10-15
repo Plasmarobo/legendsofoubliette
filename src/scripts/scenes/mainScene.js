@@ -1,8 +1,14 @@
-import PhaserLogo from '../objects/phaserLogo'
 import FpsText from '../objects/fpsText'
+import {Position, Velocity, Lifetime, Hitbox, Draw, Logic, Acceleration}  from '../engine/Components'
+import { RenderingSystem, PhysicsSystem } from '../engine/Systems'
+import { LogicSystem } from '../engine/LogicSystem'
+import { ControlEvent, LogicalControls, ControlStates, InputMap } from '../engine/InputMap'
+import CharacterSprite from '../objects/characterSprite'
 
 export default class MainScene extends Phaser.Scene {
   fpsText
+  InputMap
+  creature
 
   constructor() {
     super({ key: 'MainScene' })
@@ -12,36 +18,34 @@ export default class MainScene extends Phaser.Scene {
     /**
      * Delete all the code below to start a fresh scene
      */
-    new PhaserLogo(this, this.cameras.main.width / 2, 0)
     this.fpsText = new FpsText(this)
-
-    // async/await example
-    const pause = ms => {
-      return new Promise(resolve => {
-        window.setTimeout(() => {
-          resolve()
-        }, ms)
-      })
-    }
-    const asyncFunction = async () => {
-      console.log('Before Pause')
-      await pause(4000) // 4 seconds pause
-      console.log('After Pause')
-    }
-    asyncFunction()
-
-    // Spread operator test
-    const numbers = [0, 1, 2, 3]
-    const moreNumbers = [...numbers, 4, 5]
-    console.log(`All numbers: ` + moreNumbers)
+    this.InputMap = new InputMap(this)
 
     // display the Phaser.VERSION
     this.add
       .text(this.cameras.main.width - 15, 15, `Phaser v${Phaser.VERSION}`, {
-        color: '#000000',
-        fontSize: 24
+        color: '#ffffff',
+        fontSize: 16
       })
       .setOrigin(1, 0)
+    this.phakr.setComponents([
+      Position,
+      Velocity,
+      Acceleration,
+      Lifetime,
+      Hitbox,
+      Draw,
+      Logic
+    ]);
+
+    this.phakr.registerSystem(new PhysicsSystem(this.phakr));
+    //this.phakr.registerSystem(new TimingSystem());
+    this.phakr.registerSystem(new RenderingSystem(this.phakr))
+    var logic = new LogicSystem(this.phakr);
+    this.phakr.registerSystem(logic);
+
+    this.InputMap.addConsumer(ControlEvent.INPUT, (event, status) => logic.handleEvent(event, status))
+    this.creature = new CharacterSprite(this, 'creatures', 'boy')
   }
 
   update() {

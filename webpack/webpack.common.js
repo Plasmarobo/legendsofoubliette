@@ -29,12 +29,14 @@ module.exports = {
     }
   },
   plugins: [
-    new HtmlWebpackPlugin({ gameName: 'My Phaser Game', template: 'src/index.html' }),
-    new CopyWebpackPlugin([
-      { from: 'src/assets', to: 'assets' },
-      { from: 'pwa', to: '' },
-      { from: 'src/favicon.ico', to: '' }
-    ]),
+    new HtmlWebpackPlugin({ gameName: 'Legends of Oubliette', template: 'src/index.html' }),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: 'src/assets', to: 'assets' },
+        { from: 'pwa', to: '' },
+        { from: 'src/favicon.ico', to: '' }
+      ]
+    }),
     new InjectManifest({
       swSrc: path.resolve(__dirname, '../pwa/sw.js')
     })

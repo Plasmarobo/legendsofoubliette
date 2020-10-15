@@ -3,16 +3,17 @@ import '@babel/polyfill'
 
 import MainScene from './scenes/mainScene'
 import PreloadScene from './scenes/preloadScene'
+import { PhakrPlugin, PhakrSystem } from './plugins/phakr'
 
-const DEFAULT_WIDTH = 1280
-const DEFAULT_HEIGHT = 720
+const DEFAULT_WIDTH = 800
+const DEFAULT_HEIGHT = 600
 
 const config = {
   type: Phaser.AUTO,
-  backgroundColor: '#ffffff',
+  backgroundColor: '#000000',
   scale: {
     parent: 'phaser-game',
-    mode: Phaser.Scale.FIT,
+    mode: Phaser.Scale.WIDTH_CONTROLS_HEIGHT,
     autoCenter: Phaser.Scale.CENTER_BOTH,
     width: DEFAULT_WIDTH,
     height: DEFAULT_HEIGHT
@@ -21,9 +22,18 @@ const config = {
   physics: {
     default: 'arcade',
     arcade: {
-      debug: false,
-      gravity: { y: 400 }
+      debug: true,
+      gravity: { y: 200 }
     }
+  },
+  plugins: {
+    scene: [
+      {
+        key: 'PhakrPlugin',
+        plugin: PhakrPlugin,
+        mapping: 'phakr'
+      }
+    ]
   }
 }
 

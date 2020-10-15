@@ -4,7 +4,21 @@ export default class PreloadScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('phaser-logo', 'assets/img/phaser-logo.png')
+    this.load.atlas(
+      'creatures',
+      'assets/creatures_1.png',
+      'assets/creatures_1.json',
+      Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
+    this.load.atlas(
+      'items',
+      'assets/items.png',
+      'assets/items.json',
+      Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
+    this.load.atlas(
+      'tiles',
+      'assets/tiles.png',
+      'assets/tiles.json',
+      Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
   }
 
   create() {
