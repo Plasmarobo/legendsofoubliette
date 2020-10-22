@@ -3,6 +3,10 @@ export const LogicalControls = {
     WEST: 'west',   // Movement right
     NORTH: 'north',     // Movement down
     SOUTH: 'south',         // Movement up
+    IDLE_EAST: 'idle_east',
+    IDLE_WEST: 'idle_west',
+    IDLE_NORTH: 'idle_north',
+    IDLE_SOUTH: 'idle_south',
     IDLE: 'idle',
 
     SELECT: 'select',           // Confirm a selection, press a button

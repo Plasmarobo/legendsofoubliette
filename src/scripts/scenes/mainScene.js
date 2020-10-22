@@ -1,6 +1,6 @@
 import FpsText from '../objects/fpsText'
-import {Position, Velocity, Lifetime, Hitbox, Draw, Logic, Acceleration}  from '../engine/Components'
-import { RenderingSystem, PhysicsSystem } from '../engine/Systems'
+import {Position, Velocity, Lifetime, Hitbox, Draw, Logic, Acceleration, TimerMap, Update}  from '../engine/Components'
+import { RenderingSystem, PhysicsSystem, LifetimeSystem, TimingSystem, UpdateSystem } from '../engine/Systems'
 import { LogicSystem } from '../engine/LogicSystem'
 import { ControlEvent, LogicalControls, ControlStates, InputMap } from '../engine/InputMap'
 import CharacterSprite from '../objects/characterSprite'
@@ -35,12 +35,16 @@ export default class MainScene extends Phaser.Scene {
       Lifetime,
       Hitbox,
       Draw,
-      Logic
+      Logic,
+      TimerMap,
+      Update
     ]);
 
-    this.phakr.registerSystem(new PhysicsSystem(this.phakr));
-    //this.phakr.registerSystem(new TimingSystem());
+    this.phakr.registerSystem(new UpdateSystem(this.phakr))
+    this.phakr.registerSystem(new PhysicsSystem(this.phakr))
+    this.phakr.registerSystem(new LifetimeSystem(this.phakr))
     this.phakr.registerSystem(new RenderingSystem(this.phakr))
+    this.phakr.registerSystem(new TimingSystem(this.phakr))
     var logic = new LogicSystem(this.phakr);
     this.phakr.registerSystem(logic);
 

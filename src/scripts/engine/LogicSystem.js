@@ -1,5 +1,5 @@
 import { PhakrSystem } from '../plugins/phakr'
-import { Logic, Position, Velocity } from '../engine/Components'
+import { Logic } from '../engine/Components'
 
 export class LogicSystem extends PhakrSystem
 {
@@ -7,11 +7,6 @@ export class LogicSystem extends PhakrSystem
     {
         super(core, [Logic])
         this.handleEvent = this.handleEvent.bind(this)
-    }
-
-    update(time, delta_t, entity)
-    {
-        let logic = entity.get(Logic)
     }
 
     handleEvent(event, status)
